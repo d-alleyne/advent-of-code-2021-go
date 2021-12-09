@@ -1,2 +1,2 @@
-# advent-of-code-2021-go
+# Advent of Code 2021 in Go
 Using Advent of Code 2021 to learn Go
