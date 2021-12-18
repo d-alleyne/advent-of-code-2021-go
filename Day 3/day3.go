@@ -6,47 +6,46 @@ import (
 	"log"
 	"os"
 	"strconv"
-	"strings"
 )
 
 func main() {
 	file, err := os.Open("input.txt")
-
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer file.Close()
-	var diagnosticEntries diagnosticList
-	var sumOfEachBit intbits
 	scanner := bufio.NewScanner(file)
 
+	var diagnosticEntries diagnosticList
+	var sumOfEachBit bits
 	for scanner.Scan() {
 		diagnosticValue := scanner.Text()
-		diagnosticEntries = append(diagnosticEntries, diagnosticValue)
-		sumOfEachBit = addBits(sumOfEachBit, strings.Split(diagnosticValue, ""))
+		var binaryEntry bits
+		for i, bit := range diagnosticValue {
+			bitValue, err := strconv.Atoi(string(bit))
+			if err != nil {
+				log.Fatal(err)
+			}
+			binaryEntry[i] = bitValue
+		}
+		diagnosticEntries = append(diagnosticEntries, binaryEntry)
+		sumOfEachBit = addBits(sumOfEachBit, binaryEntry)
 	}
 
 	totalDiagnosticEntries := len(diagnosticEntries)
 
-	var gammaRate = sumOfEachBit.convertToBinary(totalDiagnosticEntries / 2)
+	gammaRate := sumOfEachBit.convertToBinary(totalDiagnosticEntries / 2)
 	epsilonRate := gammaRate.invert()
 
 	gamma := gammaRate.convertToDecimal()
 	epsilon := epsilonRate.convertToDecimal()
 	power := gamma * epsilon
-	fmt.Println(gammaRate, gamma, epsilonRate, power)
-
-	oxygenGeneratorRating := diagnosticEntries.getOxygenGeneratorRating()
-	carbonDioxideScrubberRating := 0
+	fmt.Println("The power consumption of the submarine is", power)
 
 }
 
-func addBits(sumOfEachBit intbits, strbits []string) intbits {
-	for i, bit := range strbits {
-		value, err := strconv.Atoi(bit)
-		if err != nil {
-			log.Fatal(err)
-		}
+func addBits(sumOfEachBit bits, binaryEntry bits) bits {
+	for i, value := range binaryEntry {
 		sumOfEachBit[i] += value
 	}
 	return sumOfEachBit

@@ -5,12 +5,19 @@ import (
 	"math"
 )
 
-type intbits [12]int
-type diagnosticList []string
+type bits [12]int
+type diagnosticList []bits
 
-func (b intbits) convertToBinary(midpoint int) intbits {
-	fmt.Println("Midpoint is ", midpoint)
-	var result intbits
+func (b bits) toString() string {
+	result := ""
+	for _, value := range b {
+		result += fmt.Sprintf("%d", value)
+	}
+	return result
+}
+
+func (b bits) convertToBinary(midpoint int) bits {
+	var result bits
 
 	for i, bit := range b {
 		if bit > midpoint {
@@ -22,8 +29,8 @@ func (b intbits) convertToBinary(midpoint int) intbits {
 	return result
 }
 
-func (b intbits) invert() intbits {
-	var result intbits
+func (b bits) invert() bits {
+	var result bits
 
 	for i, bit := range b {
 		if bit == 0 {
@@ -36,7 +43,7 @@ func (b intbits) invert() intbits {
 	return result
 }
 
-func (b intbits) convertToDecimal() int {
+func (b bits) convertToDecimal() int {
 	var result int
 
 	for i, bitValue := range b {
@@ -44,20 +51,4 @@ func (b intbits) convertToDecimal() int {
 		result += bitValue * int(math.Pow(2, float64(power)))
 	}
 	return result
-}
-
-func (d diagnosticList) column(index int) intbits {
-	var result intbits
-
-	return result
-}
-
-func (d diagnosticList) getOxygenGeneratorRating() int {
-	var rating int
-
-	for column, bitValue := range d {
-
-	}
-
-	return rating
 }
