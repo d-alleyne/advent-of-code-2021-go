@@ -42,6 +42,10 @@ func main() {
 	power := gamma * epsilon
 	fmt.Println("The power consumption of the submarine is", power)
 
+	oxygenGeneratorRating := diagnosticEntries.getOxygenGeneratorRating().convertToDecimal()
+	co2ScrubberRating := diagnosticEntries.getCarbonDioxideScrubberRating().convertToDecimal()
+	fmt.Println("The life support rating of the submarine is", oxygenGeneratorRating*co2ScrubberRating)
+
 }
 
 func addBits(sumOfEachBit bits, binaryEntry bits) bits {

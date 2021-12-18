@@ -5,8 +5,9 @@ import (
 	"math"
 )
 
-type bits [12]int
-type diagnosticList []bits
+const BIT_WIDTH = 12
+
+type bits [BIT_WIDTH]int
 
 func (b bits) toString() string {
 	result := ""
@@ -47,7 +48,7 @@ func (b bits) convertToDecimal() int {
 	var result int
 
 	for i, bitValue := range b {
-		power := 11 - i
+		power := BIT_WIDTH - i - 1
 		result += bitValue * int(math.Pow(2, float64(power)))
 	}
 	return result
