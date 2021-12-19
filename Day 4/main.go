@@ -45,15 +45,29 @@ func main() {
 		}
 	}
 
+	boardsThatWon := make([]int, len(boards))
+
 	for _, number := range drawNumbers {
 		for i := range boards {
 			boards[i].markNumber(number)
-			if boards[i].hasWon() {
-				boards[i].printBoard()
-				sumOfUnmarked := boards[i].getSumOfUnmarked()
-				score := sumOfUnmarked * number
-				fmt.Println("The score is", score)
-				os.Exit(0)
+			if boardsThatWon[i] == 0 && boards[i].hasWon() {
+				boardsThatWon[i] = 1
+				total := 0
+				for _, won := range boardsThatWon {
+					total += won
+				}
+				if total == len(boards) {
+					boards[i].printBoard()
+					sumOfUnmarked := boards[i].getSumOfUnmarked()
+					score := sumOfUnmarked * number
+					fmt.Println("Sum of Unmarked", sumOfUnmarked)
+					fmt.Println("Last winning number", number)
+					fmt.Println("The score is", score)
+					os.Exit(0)
+				} else {
+					fmt.Println("Board", i+1, "won")
+					boards[i].printBoard()
+				}
 			}
 		}
 	}
