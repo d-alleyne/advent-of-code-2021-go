@@ -50,8 +50,30 @@ func (o *OceanFloor) drawLine(x1 int, y1 int, x2 int, y2 int) {
 		for y := lowerBound; y <= upperBound; y++ {
 			o[y][x1]++
 		}
-	}
+	} else { // diagonal line
+		var startY, endY, yadd int
+		if x2 > x1 {
+			lowerBound = x1
+			startY = y1
+			upperBound = x2
+			endY = y2
+		} else {
+			lowerBound = x2
+			startY = y2
+			upperBound = x1
+			endY = y1
+		}
+		if endY > startY {
+			yadd = 1
+		} else {
+			yadd = -1
+		}
 
+		for y, x := startY, lowerBound; x <= upperBound; x++ {
+			o[y][x]++
+			y = y + yadd
+		}
+	}
 }
 
 func isValidX(x int) bool {
