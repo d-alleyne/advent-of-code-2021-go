@@ -1,48 +1,44 @@
 package lanternfish
 
 import (
-	"github.com/stretchr/testify/assert"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
-func TestGetInitialState(t *testing.T) {
-	var lanternFish = make(SchoolState, 1)
-	lanternFish[0] = make(School, 0)
+func TestSetInitialState(t *testing.T) {
+	var lanternFish = SchoolState{}
 
 	lanternFish.SetInitialState("sample.txt")
 
-	if len(lanternFish[0]) != 5 {
-		t.Errorf("After getInitialState, initial size expected to be 5, actual is %d\n", len(lanternFish))
+	totalFish := lanternFish.GetCountAfterDay(0)
+
+	if totalFish != 5 {
+		t.Errorf("After getInitialState, initial size expected to be 5, actual is %d\n", totalFish)
 	}
 
 }
 
-func TestGetStateAfterDay(t *testing.T) {
-	var lanternFish = make(SchoolState, 1)
-	lanternFish[0] = make(School, 0)
+func TestGetCountAfterDay(t *testing.T) {
+	var expected uint64
+	var lanternFish = SchoolState{}
 	lanternFish.SetInitialState("sample.txt")
 
-	var state = lanternFish.GetStateAfterDay(0)
+	var stateAfter1Days = lanternFish.GetCountAfterDay(1)
 
-	if len(state) != 5 {
-		t.Errorf("After getStateAfterDay(0), initial size expected to be 5, actual is %d\n", len(state))
-	}
-
-	var stateAfter1Days = lanternFish.GetStateAfterDay(1)
-
-	var expected = School{2, 3, 2, 0, 1}
+	expected = 5 // [2, 3, 2, 0, 1]
 
 	assert.EqualValues(t, expected, stateAfter1Days, "Expected values after 1 day are not the same")
 
-	var stateAfter2Days = lanternFish.GetStateAfterDay(2)
+	var stateAfter2Days = lanternFish.GetCountAfterDay(2)
 
-	expected = School{1, 2, 1, 6, 0, 8}
+	expected = 6 // [1, 2, 1, 6, 0, 8]
 
 	assert.EqualValues(t, expected, stateAfter2Days, "Expected values after 2 days are not the same")
 
-	var stateAfter9Days = lanternFish.GetStateAfterDay(9)
+	var stateAfter9Days = lanternFish.GetCountAfterDay(9)
 
-	expected = School{1, 2, 1, 6, 0, 1, 2, 3, 3, 4, 8}
+	expected = 11 //School{1, 2, 1, 6, 0, 1, 2, 3, 3, 4, 8}
 
 	assert.EqualValues(t, expected, stateAfter9Days, "Expected values after 9 days are not the same")
 

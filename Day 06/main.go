@@ -6,11 +6,15 @@ import (
 )
 
 func main() {
-	schoolState := make(lanternfish.SchoolState, 1)
-	schoolState[0] = make(lanternfish.School, 0)
+	schoolState := lanternfish.SchoolState{}
 
 	schoolState.SetInitialState("input.txt")
 
-	stateAfter80Days := schoolState.GetStateAfterDay(80)
-	fmt.Println("There are", len(stateAfter80Days), "after 80 days")
+	countAfter80Days := schoolState.GetCountAfterDay(80)
+	fmt.Println("There are", countAfter80Days, "fish after 80 days")
+
+	countAfter256Days := schoolState.GetCountAfterDay(256)
+
+	fmt.Println("There are", countAfter256Days, "fish after 256 days")
+
 }
