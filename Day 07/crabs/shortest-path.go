@@ -53,7 +53,11 @@ func (c CrabPositions) FindLeastPositionAndFuel() (position int, fuel int) {
 	for rangeOfValues := min; rangeOfValues <= max; rangeOfValues++ {
 		total := 0
 		for _, value := range c {
-			total += int(math.Abs(float64(value - rangeOfValues)))
+			var distance = value - rangeOfValues
+			if distance < 0 {
+				distance *= -1
+			}
+			total += CrabSubmarineFuelUsage(distance)
 		}
 		temp := int(math.Min(float64(fuel), float64(total)))
 		if temp != fuel {
@@ -62,4 +66,14 @@ func (c CrabPositions) FindLeastPositionAndFuel() (position int, fuel int) {
 		}
 	}
 	return position, fuel
+}
+
+func CrabSubmarineFuelUsage(distance int) int {
+	var total = 0
+
+	for start := 1; start <= distance; start++ {
+		total += start
+	}
+
+	return total
 }

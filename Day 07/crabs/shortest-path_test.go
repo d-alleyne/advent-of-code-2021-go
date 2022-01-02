@@ -1,8 +1,9 @@
 package day07
 
 import (
-	"github.com/stretchr/testify/assert"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestFindLeastFuel(t *testing.T) {
@@ -16,6 +17,21 @@ func TestFindLeastFuel(t *testing.T) {
 
 	var _, fuel = crabPositions.FindLeastPositionAndFuel()
 
-	assert.Equal(t, 37, fuel)
+	assert.Equal(t, 168, fuel)
+
+}
+
+func TestCrabSubmarineFuelUsage(t *testing.T) {
+	var horizontalDistance = 11
+
+	var fuel = CrabSubmarineFuelUsage(horizontalDistance)
+
+	assert.Equal(t, 66, fuel)
+
+	horizontalDistance = 4
+
+	fuel = CrabSubmarineFuelUsage(horizontalDistance)
+
+	assert.Equal(t, 10, fuel)
 
 }
