@@ -72,7 +72,7 @@ func CrabSubmarineFuelUsage(distance int) int {
 	var total = 0
 
 	for start := 1; start <= distance; start++ {
-		total += start
+		total = total + start
 	}
 
 	return total
